@@ -114,7 +114,7 @@ def generate_json(name, shuffled):
         for new_id, entry in enumerate(json_output, start=1):
             entry["id"] = new_id 
     
-    with open(f"{name}.json", "w") as f:
+    with open(f"jsons/{name}.json", "w") as f:
         json.dump(json_output, f, indent=4)
 
     print(f"Sample from {name}:")
