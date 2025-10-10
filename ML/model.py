@@ -173,3 +173,30 @@ class Encoder(nn.Module):
             x = layer(x, mask)
         return self.norm(x)
 
+class DecoderBlock(nn.Module):
+    #self attention eftersom samma värde är key value och query
+    def __init__(self, self_attention: MultiHeadAttention, cross_attention: MultiHeadAttention, feed_forward: FeedForwardBlock, dropout):
+        super().__init__()
+        self.self_attention = self_attention
+        self.cross_attention = cross_attention
+        self.feed_forward = feed_forward
+        self.residual_connections = nn.ModuleList([ResidualConnection(dropout) for _ in range(3)])
+    # cross attention då vi blandar sources
+
+    def forward(self, x, encoder_output, src_mask, tgt_mask):
+        x = self.residual_connections[0](x, lambda x: self.self_attention(x, x, x, tgt_mask))
+        x = self.residual_connections[1](x, lambda x: self.cross_attention(x, encoder_output, encoder_output, src_mask))
+        x = self.residual_connections[2](x, self.feed_forward)
+        return x
+
+class Decoder(nn.Module):
+
+    def __init__(self, layers: nn.ModuleList):
+        super().__init__()
+        self.layers = layers 
+        self.norm = LayerNormalization()
+
+    def forward(self, x, encoder_output, src_mask, tgt_mask):
+        for layer in self.layers:
+            x = layer(x, encoder_output, src_mask, tgt_mask)
+        return self.norm(x)
