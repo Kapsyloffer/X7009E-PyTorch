@@ -4,7 +4,7 @@ import json
 x = 450        
 d = 30         
 t_slots = 30  
-stations = 30  
+stations = 38  
 seed = 1337      
 
 random.seed(seed)

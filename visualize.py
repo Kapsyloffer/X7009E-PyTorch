@@ -84,7 +84,7 @@ ax.set_ylabel("Stations")
 
 ax.set_title(f"Assembly Line Visualization (Overlaps: {overlap_count})")
 ax.invert_yaxis()
-for i in range(len(data)):
+for i in range(len(data) + stations):
     x = i * obj_spacing
     ax.add_patch(patches.Rectangle(
         (x - slot_width, 0),
