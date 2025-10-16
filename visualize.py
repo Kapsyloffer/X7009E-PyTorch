@@ -13,15 +13,15 @@ with open(args.json_file, "r") as f:
 if isinstance(data, dict):
     data = list(data.values())
 
-stations = 30
+stations = 38
 row_height = 1
-obj_spacing = 450  
+obj_spacing = 700
 
 fig, ax = plt.subplots(figsize=(20, 12))  
 
 colors = ["skyblue", "salmon", "gold", "lightgreen"]
 
-slot_width = 75
+slot_width = 50
 max_x = len(data) * obj_spacing
 
 

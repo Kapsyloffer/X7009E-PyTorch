@@ -1,8 +1,8 @@
 import random
 import json
 
-x = 450        
-d = 30         
+x =  700
+d = 50 
 t_slots = 300
 stations = 38  
 seed = 1337      
