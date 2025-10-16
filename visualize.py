@@ -40,16 +40,19 @@ for obj_idx, obj in enumerate(data):
         x_start = start_x + offset_x
         x_end = x_start + value
 
-        for prev_start, prev_end in placed_rects[y]:
+        for prev_start, prev_end in placed_rects.get(y, []):
             if x_start < prev_end and x_end > prev_start:
                 overlap_count += 1
                 overlap_boxes.append((
-                    max(x_start, prev_start),  
+                    max(x_start, prev_start),
                     y,
-                    min(x_end, prev_end) - max(x_start, prev_start),  
+                    min(x_end, prev_end) - max(x_start, prev_start),
                     row_height
                 ))
 
+        # add rectangle to the list
+        if y not in placed_rects:
+            placed_rects[y] = []
         placed_rects[y].append((x_start, x_end))
 
         ax.add_patch(patches.Rectangle(
